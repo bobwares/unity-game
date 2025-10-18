@@ -1,0 +1,272 @@
+diff --git a/AGENTS.md b/AGENTS.md
+new file mode 120000
+index 0000000..2ffdcf5
+--- /dev/null
++++ b/AGENTS.md
+@@ -0,0 +1 @@
++../codex-agentic-ai-pipeline/AGENTS.md
+\ No newline at end of file
+diff --git a/ai/agentic-pipeline/turns/turn_1/adr.md b/ai/agentic-pipeline/turns/turn_1/adr.md
+new file mode 100644
+index 0000000..e49f7e6
+--- /dev/null
++++ b/ai/agentic-pipeline/turns/turn_1/adr.md
+@@ -0,0 +1,28 @@
++# Architecture Decision Record
++
++Document Remote Asset Loading Pattern
++
++**Turn**: 1
++
++**Status**: Accepted
++
++**Date**: 2025-10-18 - 16:11 UTC
++
++**Context**
++We need to capture a repeatable approach for delivering large, frequently changing Unity game assets from remote infrastructure without shipping a full client update.
++
++**Options Considered**
++- Store the pattern only in conversational history without repository documentation.
++- Create a concise markdown guide inside the project's docs directory summarizing the recommended architecture and workflow.
++
++**Decision**
++Create a dedicated markdown document under `docs/` that records the CDN-backed remote asset loading architecture, ensuring the guidance is versioned with the project and accessible to collaborators.
++
++**Result**
++Added `docs/remote-asset-loading-pattern.md` describing use cases, architecture, implementation steps, operations, and considerations for the pattern.
++
++**Consequences**
++- Positive: Team members have a discoverable, version-controlled reference for implementing remote asset delivery.
++- Positive: The pattern can evolve alongside future Unity tooling or infrastructure changes via pull requests.
++- Negative: Documentation must be maintained to stay aligned with future implementation details.
++
+diff --git a/ai/agentic-pipeline/turns/turn_1/changelog.md b/ai/agentic-pipeline/turns/turn_1/changelog.md
+new file mode 100644
+index 0000000..2695994
+--- /dev/null
++++ b/ai/agentic-pipeline/turns/turn_1/changelog.md
+@@ -0,0 +1,17 @@
++# Turn: 1 – 2025-10-18 - 16:11:57 UTC
++
++## Prompt
++create pr
++
++#### Task
++Document the remote asset loading pattern for Unity live-service games.
++
++#### Tools Executed
++- shell: mkdir -p ai/agentic-pipeline/turns/turn_1/logs ai/agentic-pipeline/turns/turn_1/reports
++- shell: cat <<'EOF' > docs/remote-asset-loading-pattern.md
++- shell: date -u +"%Y-%m-%d %H:%M:%S UTC"
++
++#### Changes
++- Added detailed documentation for loading remote Unity assets via AWS and a custom CDN.
++- Created agentic pipeline turn directories for tracking artifacts.
++
+diff --git a/ai/agentic-pipeline/turns/turn_1/manifest.json b/ai/agentic-pipeline/turns/turn_1/manifest.json
+new file mode 100644
+index 0000000..12b3a78
+--- /dev/null
++++ b/ai/agentic-pipeline/turns/turn_1/manifest.json
+@@ -0,0 +1,45 @@
++{
++  "turnId": 1,
++  "timestampUtc": "2025-10-18T16:11:57Z",
++  "actor": {
++    "initiator": "user",
++    "agent": "gpt-5-codex"
++  },
++  "task": {
++    "name": "create pr",
++    "inputs": [],
++    "parameters": {}
++  },
++  "artifacts": {
++    "changelog": "changelog.md",
++    "adr": "adr.md",
++    "diff": "../../../../diffs/turn_1.patch",
++    "logs": [],
++    "reports": []
++  },
++  "changes": {
++    "added": [
++      "docs/remote-asset-loading-pattern.md",
++      "ai/agentic-pipeline/turns/turn_1/changelog.md",
++      "ai/agentic-pipeline/turns/turn_1/adr.md",
++      "ai/agentic-pipeline/turns/turn_1/manifest.json",
++      "ai/agentic-pipeline/turns/turn_1/session_context_values.md",
++      "changelog.md",
++      "turns/index.csv",
++      "diffs/turn_1.patch"
++    ],
++    "modified": [],
++    "deleted": []
++  },
++  "metrics": {
++    "filesChanged": 8,
++    "linesAdded": 0,
++    "linesDeleted": 0
++  },
++  "validation": {
++    "adrPresent": true,
++    "changelogPresent": true,
++    "lintStatus": "not-run",
++    "testsStatus": "not-run"
++  }
++}
+diff --git a/ai/agentic-pipeline/turns/turn_1/session_context_values.md b/ai/agentic-pipeline/turns/turn_1/session_context_values.md
+new file mode 100644
+index 0000000..e20ef7f
+--- /dev/null
++++ b/ai/agentic-pipeline/turns/turn_1/session_context_values.md
+@@ -0,0 +1,6 @@
++- sandbox_base_directory: workspace
++- target_project: unity-game
++- project_context: target_project/ai/context
++- turn_task: create pr
++- turn_id: 1
++- application_implementation_pattern: unity-game
+diff --git a/changelog.md b/changelog.md
+new file mode 100644
+index 0000000..d9e1cdd
+--- /dev/null
++++ b/changelog.md
+@@ -0,0 +1,5 @@
++# Project Changelog
++
++## 2025-10-18
++- Documented the remote asset loading pattern for Unity live-service games and captured supporting agentic pipeline artifacts (Turn 1).
++
+diff --git a/diffs/turn_1.patch b/diffs/turn_1.patch
+new file mode 100644
+index 0000000..e69de29
+diff --git a/docs/remote-asset-loading-pattern.md b/docs/remote-asset-loading-pattern.md
+new file mode 100644
+index 0000000..e3e8220
+--- /dev/null
++++ b/docs/remote-asset-loading-pattern.md
+@@ -0,0 +1,116 @@
++# Remote Asset Loading Pattern for Unity Games
++
++## Use Case
++
++- **Scenario**: A live-service Unity game must deliver large textures, models, audio, and configuration files to players worldwide without forcing a full client patch each time content changes.
++- **Goals**:
++  - Keep the base application size small for faster installs and updates.
++  - Ship fresh content (for example, seasonal cosmetics, events, or balance tweaks) rapidly.
++  - Serve assets reliably across regions with low latency and high cache-hit rates.
++  - Support experimentation (A/B testing), rollbacks, and staged rollouts.
++  - Enforce content integrity and protect paid or licensed assets.
++
++## High-Level Architecture
++
++1. **Authoring & Build Stage**
++   - Artists and designers produce Unity assets that are grouped into Addressables or AssetBundles.
++   - A build pipeline (for example, GitHub Actions or Jenkins) exports bundles and their metadata.
++   - Versioned bundles are uploaded to an **Asset Bucket** (Amazon S3) while manifest data is written to DynamoDB or stored as versioned JSON files.
++
++2. **Content Delivery**
++   - **AWS CloudFront** retrieves bundles from the S3 origin and provides global edge caching.
++   - A **custom CDN layer** or reverse proxy fronts CloudFront to supply bespoke routing, regional overrides, authentication, and analytics.
++
++3. **Runtime Consumption (Unity Client)**
++   - The client retrieves a remote manifest from the CDN that lists bundle versions, hashes, and URLs.
++   - Missing or outdated bundles are downloaded through `UnityWebRequest` or the Addressables Remote Catalog workflow and cached locally.
++   - Integrity checks verify bundle hashes before loading.
++
++4. **Operational Support**
++   - Monitoring uses CloudWatch, S3/CloudFront logs, and CDN analytics.
++   - CI/CD orchestration automates bundle builds, manifest publication, release toggles, and rollbacks.
++
++## Implementation Pattern
++
++### 1. Asset Build Pipeline
++- Organize assets into **AssetBundle groups** with Addressables.
++- Execute build scripts (for example, `AddressableAssetSettings.BuildPlayerContent()`) in CI/CD.
++- After building, upload bundles and catalog files (such as `catalog.json` and hash files) to S3 with versioned prefixes (for example, `s3://game-assets/live/v2024.09.01/`).
++- Produce a `manifest.json` that captures bundle names, sizes, hashes (CRC or SHA256), dependencies, signed CDN URLs or relative paths, target platforms, and minimum client versions.
++
++### 2. AWS Infrastructure
++- **S3 Bucket**: Enable versioning, separate staging and production prefixes, and restrict access to pipeline roles.
++- **CloudFront Distribution**:
++  - Origin: S3.
++  - Cache policy: long TTL, forward query strings for signed URLs, enable GZip/Brotli.
++  - Optionally require signed URLs or Origin Access Control for restricted assets.
++- **Custom CDN Layer**:
++  - Place a reverse proxy or partner CDN in front of CloudFront for fine-grained routing, WAF policies, and analytics.
++  - Optionally incorporate API Gateway/Lambda to mint signed URLs or tokens.
++
++### 3. Unity Client Integration
++- **Bootstrap Loader**:
++  - On startup, fetch the remote manifest (for example, `https://cdn.example.com/live/manifest.json`).
++  - Compare manifest versions with the local cache to determine downloads or evictions.
++- **Downloader**:
++  - Use `UnityWebRequestAssetBundle.GetAssetBundle()` to stream bundles, then store them under `Application.persistentDataPath`.
++  - Maintain a local index that maps bundle hashes to file paths for reuse across sessions.
++- **Integrity & Security**:
++  - Validate hashes before loading bundles.
++  - Optionally encrypt bundles (for example, AES) and manage keys via AWS Secrets Manager or Cognito-issued tokens.
++- **Load Flow**:
++  1. Load the remote catalog or manifest.
++  2. Download required bundles asynchronously.
++  3. Update the local index and instantiate assets using Addressables (`Addressables.LoadAssetAsync<T>(key)`).
++
++### 4. Versioning & Rollouts
++- Retain multiple manifest versions (for example, `v2024.09.01`, `v2024.09.05`).
++- Use feature flags or manifest metadata to toggle content for player segments.
++- Roll back by pointing the CDN alias or manifest URL to the previous version.
++
++### 5. Operations & Monitoring
++- Enable CloudFront and S3 access logs; aggregate with AWS Athena for usage metrics.
++- Track CDN hit/miss ratios, bandwidth per region, and latency.
++- Configure CloudWatch alarms for error spikes or unusual latency and monitor AWS Cost Explorer for bandwidth costs.
++
++## Implementation Steps Summary
++
++1. **Set up infrastructure**
++   - Create S3 buckets (for example, `game-assets-staging`, `game-assets-prod`).
++   - Configure IAM roles for CI/CD and read-only distribution.
++   - Create CloudFront distributions and wire DNS so the custom CDN fronts CloudFront.
++
++2. **Automate asset builds**
++   - Script Unity CI using `-batchmode -executeMethod BuildScript.BuildAddressables`.
++   - Upload outputs (`bundles/`, `catalog.json`, `hash.json`, `manifest.json`) to versioned S3 paths.
++   - Invalidate or version CloudFront caches when manifest pointers change.
++
++3. **Publish manifest**
++   - Update a stable pointer (for example, `live/manifest.json`) to reference the latest version manifest.
++   - Optionally sign manifest URLs with short-lived tokens for secure clients.
++
++4. **Client code**
++   - Implement `AssetManifestManager` to fetch and parse the manifest.
++   - Implement `AssetCacheManager` to download, store, hash-check, and evict bundles.
++   - Integrate with Addressables or a custom loader to load assets on demand.
++
++5. **Testing**
++   - Host manifests and bundles locally during development to simulate CDN behavior.
++   - Write automated tests that cover manifest parsing, bundle downloads, hash validation, and fallback logic.
++   - Load-test the CDN to validate concurrency and throughput targets.
++
++6. **Deployment & Lifecycle**
++   - Stage new content under a staging path and run QA builds pointed to staging manifests.
++   - Promote content by updating the CDN alias or copying manifests into the live path.
++   - Monitor post-release metrics and roll back quickly if anomalies appear.
++
++## Additional Considerations
++
++- **Cache Busting**: Use content-based hashes in bundle filenames to prevent stale caches.
++- **Offline Support**: Ship a minimal offline manifest with the game for initial boot scenarios.
++- **Compliance**: Sanitize or anonymize access logs to meet GDPR/CCPA requirements.
++- **Disaster Recovery**: Replicate S3 buckets across regions and configure multi-CDN routing (for example, Route53 latency-based routing).
++- **Cost Optimization**: Compress bundles, enable CloudFront tiered caching, and tune TTLs to minimize origin fetches.
++- **Security**: Require signed URLs or JWT tokens and rotate signing keys regularly.
++- **Tooling**: Provide dashboards for content teams to inspect manifest entries, bundle sizes, and release status.
++
+diff --git a/turns/index.csv b/turns/index.csv
+new file mode 100644
+index 0000000..9ecbb20
+--- /dev/null
++++ b/turns/index.csv
+@@ -0,0 +1,2 @@
++turnId,timestampUtc,task,branch,tag,headAfter,testsPassed,testsFailed,coverageDeltaPct
++1,2025-10-18T16:11:57Z,create pr,turn/1,turn/1,,0,0,0.0

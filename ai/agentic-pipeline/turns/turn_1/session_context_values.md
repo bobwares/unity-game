@@ -1,0 +1,6 @@
+- sandbox_base_directory: workspace
+- target_project: unity-game
+- project_context: target_project/ai/context
+- turn_task: create pr
+- turn_id: 1
+- application_implementation_pattern: unity-game
