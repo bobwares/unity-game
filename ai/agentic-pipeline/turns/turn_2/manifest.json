@@ -1,0 +1,46 @@
+{
+  "turnId": 2,
+  "timestampUtc": "2025-10-18T20:09:39Z",
+  "actor": {
+    "initiator": "user",
+    "agent": "gpt-5-codex"
+  },
+  "task": {
+    "name": "Create Unity Addressables domain paper",
+    "inputs": [],
+    "parameters": {}
+  },
+  "artifacts": {
+    "changelog": "changelog.md",
+    "adr": "adr.md",
+    "diff": "../../../../diffs/turn_2.patch",
+    "logs": [],
+    "reports": []
+  },
+  "changes": {
+    "added": [
+      "docs/unity-addressables-paper.md",
+      "ai/agentic-pipeline/turns/turn_2/changelog.md",
+      "ai/agentic-pipeline/turns/turn_2/adr.md",
+      "ai/agentic-pipeline/turns/turn_2/manifest.json",
+      "ai/agentic-pipeline/turns/turn_2/session_context_values.md",
+      "diffs/turn_2.patch"
+    ],
+    "modified": [
+      "changelog.md",
+      "turns/index.csv"
+    ],
+    "deleted": []
+  },
+  "metrics": {
+    "filesChanged": 7,
+    "linesAdded": 0,
+    "linesDeleted": 0
+  },
+  "validation": {
+    "adrPresent": true,
+    "changelogPresent": true,
+    "lintStatus": "not-run",
+    "testsStatus": "not-run"
+  }
+}

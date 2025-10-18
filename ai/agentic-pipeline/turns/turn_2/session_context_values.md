@@ -1,0 +1,6 @@
+- sandbox_base_directory: workspace
+- target_project: unity-game
+- project_context: target_project/ai/context
+- turn_task: Create a detailed paper on Unity Addressables. Create the ubiquitous language and define the domain.
+- turn_id: 2
+- application_implementation_pattern: unity-game
