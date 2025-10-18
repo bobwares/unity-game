@@ -36,3 +36,7 @@ public class EnemySpawner : MonoBehaviour
 ```
 
 > **Tip:** The loader stores handles by the address string. Release assets and instances using the same address you used to load them, or call `ReleaseInstance` with the spawned `GameObject` when you are finished.
+
+## Learning C# with Unity
+
+See [docs/unity-csharp-tutorial.md](docs/unity-csharp-tutorial.md) for a step-by-step walkthrough that covers installing tooling, creating scripts, working with prefabs and Addressables, saving data, and preparing builds. The guide is designed as a primer for new team members who want to understand how C# scripts integrate with Unity's component system.
