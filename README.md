@@ -78,7 +78,7 @@ It supports **macOS**, **iOS**, and **Android** targets, with environment-specif
 The pipeline is composed of two coordinated implementation layers:
 
 **1. CI/CD Orchestration (Build Automation Layer)**
-Implemented with GitHub Actions and [GameCI](https://game.ci/docs/github/getting-started) (`unity-builder@v4`), this layer automates:
+Implemented with GitHub Actions and [GameCI](https://game.ci/docs/) (`unity-builder@v4`), this layer automates:
 
 * **Headless Unity builds** for all platforms using `unity-builder@v4`.
 * **Parallel execution** across macOS, iOS, and Android targets via a job matrix.
