@@ -78,7 +78,7 @@ It supports **macOS**, **iOS**, and **Android** targets, with environment-specif
 The pipeline is composed of two coordinated implementation layers:
 
 **1. CI/CD Orchestration (Build Automation Layer)**
-Implemented with GitHub Actions and [GameCI](https://game.ci/docs/github/ci/unity-builder/) (`unity-builder@v4`), this layer automates:
+Implemented with GitHub Actions and [GameCI](https://game.ci/docs/github/getting-started) (`unity-builder@v4`), this layer automates:
 
 * **Headless Unity builds** for all platforms using `unity-builder@v4`.
 * **Parallel execution** across macOS, iOS, and Android targets via a job matrix.
@@ -99,7 +99,7 @@ Implemented as a C# editor script (`AddressablesBuild.BuildAll`), this layer per
 **Explanation**
 
 This configuration defines the **automation workflow** that drives the Unity Addressables build and publishing process.
-When a change is pushed to the repository, the [GameCI Unity Builder v4](https://game.ci/docs/github/ci/unity-builder/) action runs Unity in **headless batch mode** to execute the `AddressablesBuild.BuildAll` method for each platform—**macOS**, **iOS**, and **Android**.
+When a change is pushed to the repository, the [GameCI Unity Builder v4](https://game.ci/docs/github/getting-started) action runs Unity in **headless batch mode** to execute the `AddressablesBuild.BuildAll` method for each platform—**macOS**, **iOS**, and **Android**.
 After building, artifacts are uploaded as versioned outputs and synced to **AWS S3** under environment-specific directories (`DEV`, `STAGE`, `PROD`).
 The result is a fully automated, multi-platform, multi-environment delivery system for asset bundles and catalogs.
 
