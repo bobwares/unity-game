@@ -1,5 +1,6 @@
 # Setup Unity Development Environment
 
+
 ## Overview
 This guide walks a new Unity game developer through preparing their workstation, creating the required Unity account, and verifying core tooling (including Visual Studio) so they can start working on projects immediately.
 
