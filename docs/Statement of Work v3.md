@@ -61,7 +61,7 @@ To ensure players can install and begin playing within seconds, the project adop
 
 * **External Studio Integration Framework:**
   Standards and workflows for integrating **content creation studios** into the production process. Each studio follows shared conventions for asset bundling, naming, optimization, and validation to guarantee that submissions align with the main project’s technical and performance requirements.
-
+ 
 
 ### 2. **Implementation of the Unity Addressables Publishing Pipeline**
 ### 2. Implementation of the Unity Addressables Publishing Pipeline
