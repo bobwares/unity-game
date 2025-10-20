@@ -187,8 +187,6 @@ jobs:
           echo "Published Addressables for ${{ matrix.platform }} → s3://my-game-addressables/${{ env.ENV }}/${{ matrix.platform }}/"
 ```
 
----
-
 ### Addressables Build Script – Multi-Platform, Multi-Environment Build Logic
 
 **Explanation**
@@ -266,8 +264,6 @@ namespace Company.Product.Tooling.Addressables.Build
     }
 }
 ```
-
-
 
 ### Outcome
 
