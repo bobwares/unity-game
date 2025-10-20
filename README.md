@@ -33,8 +33,6 @@ As modern games expand, content creation is often distributed across multiple st
 To address the **studio integration problem**, the project introduces a **structured collaboration framework** that standardizes how external studios produce and deliver game assets. This framework defines explicit conventions for asset bundling, naming, optimization, and submission workflows, enabling consistent quality and predictable integration. By enforcing these shared guidelines, all external contributions can be automatically validated, approved, and merged into the main project pipeline without build conflicts or release interruptions, ensuring smooth and scalable multi-studio collaboration.
 
 
---
-
 ## Deliverables
 
 ### 1. **Unity Addressables Implementation Pattern**
