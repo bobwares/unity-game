@@ -33,7 +33,7 @@ As modern games expand, content creation is often distributed across multiple st
 To address the **studio integration problem**, the project introduces a **structured collaboration framework** that standardizes how external studios produce and deliver game assets. This framework defines explicit conventions for asset bundling, naming, optimization, and submission workflows, enabling consistent quality and predictable integration. By enforcing these shared guidelines, all external contributions can be automatically validated, approved, and merged into the main project pipeline without build conflicts or release interruptions, ensuring smooth and scalable multi-studio collaboration.
 
 
----
+--
 
 ## Deliverables
 
@@ -42,8 +42,6 @@ To address the **studio integration problem**, the project introduces a **struct
 To ensure players can install and begin playing within seconds, the project adopts the [Unity Addressables system](https://docs.unity3d.com/Manual/com.unity.addressables.html) as the foundation for its asset management and delivery strategy. The pattern provides guidance for structuring a game so that only essential assets—menus, initial scenes, and the first playable area—are included in the base download, while all other content is organized into addressable bundles. These bundles enable dynamic loading, efficient memory management, and seamless background downloads, ensuring rapid startup, minimal storage impact, and scalable content updates throughout the game’s lifecycle.
 
 *For more detailed implementation guidance, see the “Addressables: Planning and Best Practices” blog post from Unity.* ([unity.com](https://unity.com/blog/engine-platform/addressables-planning-and-best-practices))
-
----
 
 **The pattern will include:**
 
@@ -64,7 +62,6 @@ To ensure players can install and begin playing within seconds, the project adop
 
 
 ### 2. **Implementation of the Unity Addressables Publishing Pipeline**
-### 2. Implementation of the Unity Addressables Publishing Pipeline
 
 The second deliverable is the **implementation of an automated Asset Publishing Pipeline**, responsible for **building, validating, and distributing Unity Addressable asset bundles**.
 This implementation exists to **decouple external studios and content teams from the core game repository**, allowing asset production to function as an **independent, modular workflow**.
@@ -76,7 +73,7 @@ Once validated, the assets are **built, analyzed, and deployed** to the configur
 This publishing pipeline achieves **environmental separation**, **multi-platform consistency**, and **repeatable automation** using a combination of Unity’s Addressables system, [GameCI](https://game.ci/) for headless CI execution, and AWS S3 as the backing CDN.
 It supports **macOS**, **iOS**, and **Android** targets, with environment-specific configuration for `DEV`, `STAGE`, and `PROD`.
 
----
+
 
 ### Pipeline Architecture and Tooling
 
@@ -98,7 +95,6 @@ Implemented as a C# editor script (`AddressablesBuild.BuildAll`), this layer per
 * Addressables build execution for the current target platform.
 * Log output of generated bundles, catalogs, and metadata.
 
----
 
 ### GitHub Actions Configuration – GameCI Multi-Platform Build and S3 Publishing
 
@@ -273,7 +269,7 @@ namespace Company.Product.Tooling.Addressables.Build
 }
 ```
 
----
+
 
 ### Outcome
 
