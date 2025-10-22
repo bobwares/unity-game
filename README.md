@@ -1,9 +1,22 @@
-# Statement of Work (SOW)
+# Product Requirements Document
 
 * **Project Title:** Unity Game Framework – Addressables-Based Asset Pipeline
-* **Version:** 1.0.0
-* **Date:** 2025-10-19
-* **Author:** Bobwares Consulting
+* **Version:** 1.1.0
+* **Date:** 2025-10-22
+* **Author:** Robert Adelmann 
+* **Email:** robertadelmann@yahoo.com
+
+## Purpose
+
+The purpose of this document is to define the functional, architectural, and operational requirements for using the **Unity Game Framework’s [Addressables system](https://docs.unity3d.com/Packages/com.unity.addressables%401.20/manual/index.html)** to optimize content delivery, reduce game installation size, and streamline multi-studio asset integration.
+
+This PRD serves as both a **technical specification** and a **production guideline** for implementing an automated, cloud-integrated pipeline that manages Addressable Assets across multiple environments (DEV, STAGE, PROD) and target platforms (macOS, iOS, Android). It establishes the standards, patterns, and delivery workflows necessary to achieve:
+
+1. **Faster Player Onboarding** through small initial downloads and background content streaming.
+2. **Consistent Content Delivery** using a reproducible, version-controlled build and publishing pipeline.
+3. **Seamless Studio Collaboration** via a standardized framework for external content producers, ensuring alignment in structure, quality, and optimization across all asset submissions.
+4. **Operational Scalability** with automated CI/CD orchestration (via GameCI), AWS S3 publishing, and environment-specific deployment control.
+
 
 ## Problem Statement
 

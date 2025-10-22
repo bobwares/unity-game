@@ -1,16 +1,3 @@
-# Project
-
-- Name: Unity Game
-
-- Detailed Description:
-
-The Unity Game Project is a hello world project for learning about creating game for the Unity platform.
-
-
-## Pattern
-
-Build the project using the pattern: unity-game.
-
 # Reference
 
 - https://unity.com/blog/engine-platform/addressables-planning-and-best-practices?utm_source=chatgpt.com
@@ -28,5 +15,5 @@ Git LFS - https://github.com/git-lfs/git-lfs
 https://github.com/Unity-Technologies/com.unity.services.samples.use-cases
 
 GameCI
-https://game.ci/docs/ 
+https://game.ci/docs/
 https://game.ci/docs/github/builder/
